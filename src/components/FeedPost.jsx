@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import {
   Entypo,
   AntDesign,
@@ -6,8 +6,15 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import LikeImage from "../../assets/images/like.png";
+import { useState } from "react";
 
 const FeedPost = ({ post }) => {
+  const [isLiked, setIsLiked] = useState(false);
+
+  const toggleLike = () => {
+    setIsLiked((v) => !v);
+  };
+
   return (
     <View style={styles.post}>
       <View style={styles.header}>
@@ -40,10 +47,21 @@ const FeedPost = ({ post }) => {
           <Text style={styles.shares}>{post.numberOfShares} shares</Text>
         </View>
         <View style={styles.buttonsRow}>
-          <View style={styles.iconButton}>
-            <AntDesign name="like2" size={18} color="gray" />
-            <Text style={styles.iconButtonText}>Like</Text>
-          </View>
+          <Pressable onPress={toggleLike} style={styles.iconButton}>
+            <AntDesign
+              name="like2"
+              size={18}
+              color={isLiked ? "royalblue" : "gray"}
+            />
+            <Text
+              style={[
+                styles.iconButtonText,
+                { color: isLiked ? "royalblue" : "gray" },
+              ]}
+            >
+              Like
+            </Text>
+          </Pressable>
 
           {/* Comment button */}
           <View style={styles.iconButton}>
